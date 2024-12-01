@@ -1,101 +1,76 @@
-import Image from "next/image";
+'use client';
+import { useState } from 'react';
+import { Icon } from '@iconify/react';
+import magicIcon from '@iconify/icons-fa/magic';
+import timesIcon from '@iconify/icons-fa/times';
+import linkedinIcon from '@iconify/icons-fa/linkedin';
+import mediumIcon from '@iconify/icons-fa/medium';
+import githubIcon from '@iconify/icons-fa/github';
+import Image from 'next/image';
+import Link from 'next/link';
+import { profile } from '@/public/assets';
 
-export default function Home() {
+const ProfilePage = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleCurtains = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div>
+      <nav
+        id="nav"
+        className={`absolute top-5 right-5 flex items-center justify-center p-4 bg-gradient-to-r from-pink-500 to-red-500 rounded-full shadow-lg transition-opacity duration-200 z-30 ${isOpen ? 'opacity-100' : 'opacity-0 hidden'}`}
+      >
+        <Link href="/" className="text-white text-lg px-4 py-2 rounded hover:bg-white hover:bg-opacity-20">
+          Home
+        </Link>
+        <Link href="/projects" className="text-white text-lg px-4 py-2 rounded hover:bg-white hover:bg-opacity-20">
+          Projects
+        </Link>
+      </nav>
+      <div className="relative w-screen h-screen bg-gray-900 overflow-hidden">
+        <button
+          id="toggle"
+          onClick={toggleCurtains}
+          className="absolute top-5 left-1/2 transform -translate-x-1/2 z-30 p-4 text-lg text-white bg-gradient-to-r from-pink-500 to-red-500 rounded-full shadow-lg transition-transform duration-200 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-500 active:translate-y-1"
+        >
+          <Icon icon={isOpen ? timesIcon : magicIcon} />
+        </button>
+        <div
+          className={`z-20 absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-red-800 to-red-900 shadow-inner transition-transform duration-200 ${isOpen ? '-translate-x-full' : 'translate-x-0'}`}
+          style={{ boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.8)' }}
+        ></div>
+        <div
+          className={`z-20 absolute top-0 right-0 w-1/2 h-full bg-gradient-to-r from-red-800 to-red-900 shadow-inner transition-transform duration-200 ${isOpen ? 'translate-x-full' : 'translate-x-0'}`}
+          style={{ boxShadow: 'inset 0 0 20px rgba(0, 0, 0, 0.8)' }}
+        ></div>
+        <div className={`relative z-10 flex items-center justify-center h-full text-white transition-opacity duration-200 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="flex w-full h-full justify-center items-center">
+            <div className="w-1/2 text-center">
+              <Image src={profile} alt="Your Image" width={400} height={400} className="rounded-full mx-auto" />
+            </div>
+            <div className="w-1/2 text-center items-center justify-center">
+              <h1 className="text-3xl">Hendra Lijaya</h1>
+              <p className="mt-2 text-xl">Junior Software Engineer</p>
+              <div className="mt-4 flex justify-center space-x-4">
+                <Link href="https://www.linkedin.com/in/hendra-lijaya/" target="_blank" className="text-white bg-blue-500 rounded-full p-4 shadow-lg transition-transform duration-200 hover:bg-blue-800">
+                  <Icon icon={linkedinIcon} />
+                </Link>
+                <Link href="https://medium.com/@hendralijaya" target="_blank" className="text-white bg-white rounded-full p-4 shadow-lg transition-transform duration-200 hover:bg-gray-400">
+                  <Icon icon={mediumIcon} className="text-black" />
+                </Link>
+                <Link href="https://github.com/hendralijaya" target="_blank" className="text-white bg-white rounded-full p-4 shadow-lg transition-transform duration-200 hover:bg-gray-400">
+                  <Icon icon={githubIcon} className="text-black" />
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
-}
+};
+
+export default ProfilePage;
